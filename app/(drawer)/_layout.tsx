@@ -1,0 +1,57 @@
+import { useColorScheme } from '@/hooks/useColorScheme';
+import MaterialCommunityIcons from '@react-native-vector-icons/material-design-icons';
+import { router } from "expo-router";
+import { Drawer, DrawerContentScrollView, DrawerItem } from 'expo-router/drawer';
+import { Linking, StyleSheet } from 'react-native';
+
+const CustomDrawerContent = (props) => {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItem 
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="account-child" size={27} />
+        )} 
+        label={"About Us"}
+        labelStyle={styles.navItemLabel}
+        onPress={() => {
+          Linking.openURL("https://annualreport.nokidhungry.org");
+        }}
+      />
+      <DrawerItem 
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="lightbulb" size={25} />
+        )} 
+        label={"FAQs"}
+        labelStyle={styles.navItemLabel}
+        onPress={() => {
+          router.push('other/faqs');
+        }}
+      />
+      <DrawerItem 
+        icon={({color, size}) => (
+          <MaterialCommunityIcons name="cog" size={25} />
+        )} 
+        label={"Settings"}
+        labelStyle={styles.navItemLabel}
+        onPress={() => {
+          router.push('other/settings');
+        }}
+      />
+    </DrawerContentScrollView>
+  );
+}
+
+export default function Layout() {
+  const colorScheme = useColorScheme();
+
+  return (
+    <Drawer drawerContent={(props) => <CustomDrawerContent {...props} />} screenOptions={{ headerShown: false }} />
+  )
+}
+
+const styles = StyleSheet.create({
+  navItemLabel: {
+    marginLeft:-20,
+    fontSize: 18,
+  }
+})
